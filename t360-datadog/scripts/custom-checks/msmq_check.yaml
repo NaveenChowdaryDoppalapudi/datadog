@@ -1,0 +1,30 @@
+################################################################################
+# T360 MSMQ Custom Check Configuration
+#
+# Installation:
+#   Copy to: C:\ProgramData\Datadog\conf.d\msmq_check.d\conf.yaml
+#   Restart: Restart-Service DatadogAgent
+#
+# Verify:
+#   & "C:\Program Files\Datadog\Datadog Agent\bin\agent.exe" check msmq_check
+################################################################################
+
+init_config:
+  # Minimum collection interval in seconds (default: 15)
+  min_collection_interval: 60
+
+instances:
+  - # Queue filter pattern (PowerShell wildcard)
+    # Use "*" for all queues or "*t360*" for T360-specific queues
+    queue_filter: "*"
+
+    # Threshold for service check status
+    warn_threshold: 1       # WARNING if total messages >= 1
+    critical_threshold: 5   # CRITICAL if total messages >= 5
+
+    # Tags applied to all metrics from this check
+    tags:
+      - "app:t360"
+      - "service:itp"
+      - "env:production"
+      - "check:item-10-msmq"
